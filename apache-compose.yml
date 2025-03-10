@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  apache:
+    image: httpd:2.4
+    volumes:
+      - apache_data:/usr/local/apache2/htdocs
+    ports:
+      - "8080:80"
+
+  backup:
+    image: amazon/aws-cli
+    container_name: apache-backup
+    volumes:
+      - apache_data:/data
+      - ./backup.sh:/backup.sh
+      - ./entrypoint.sh:/entrypoint.sh
+    env_file:
+      - .env
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - S3_BUCKET=${S3_BUCKET}
+      - CRON_MIN=${CRON_MIN}
+      - CRON_HOUR=${CRON_HOUR}
+    entrypoint: /entrypoint.sh
+
+volumes:
+  apache_data:

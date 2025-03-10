@@ -1,0 +1,28 @@
+# Ignore environment variable files
+.env
+
+# Ignore temporary backup files (in case they're created locally)
+*.tar.gz
+*.tar.gz.enc
+*.bak
+
+# Ignore log files
+*.log
+/var/log/*
+/logs/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore Docker-related files
+**/__pycache__/
+**/*.pyc
+.docker/
+docker-compose.override.yml
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
